@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Cuenta atrás hasta el lunes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,13 +31,27 @@
         const idioma = navigator.language || navigator.userLanguage;
         const esEspanol = idioma.startsWith("es");
 
-        // Fecha objetivo
-        const fechaObjetivo = new Date("2025-07-20T15:20:00").getTime();
+        function getNextMonday() {
+            const now = new Date();
+            const day = now.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
+            const distanceToMonday = (8 - day) % 7 || 7; // Si es lunes hoy, apunta al siguiente
+            const nextMonday = new Date(now);
+            nextMonday.setHours(0, 0, 0, 0); // A las 00:00
+            nextMonday.setDate(now.getDate() + distanceToMonday);
+            return nextMonday.getTime();
+        }
 
-        // Actualiza el contador cada segundo
+        let fechaObjetivo = getNextMonday();
+
         const intervalo = setInterval(() => {
             const ahora = new Date().getTime();
-            const diferencia = fechaObjetivo - ahora;
+            let diferencia = fechaObjetivo - ahora;
+
+            // Si ya pasó, calcular el siguiente lunes
+            if (diferencia <= 0) {
+                fechaObjetivo = getNextMonday();
+                diferencia = fechaObjetivo - ahora;
+            }
 
             // Calcula días, horas, minutos y segundos
             const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
@@ -50,16 +64,10 @@
             const textoHoras = esEspanol ? "horas" : "hours";
             const textoMinutos = esEspanol ? "minutos" : "minutes";
             const textoSegundos = esEspanol ? "segundos" : "seconds";
-            const mensajeFinal = esEspanol ? "¡El tiempo ha llegado!" : "Time is up!";
 
             // Muestra el resultado
-            if (diferencia >= 0) {
-                document.getElementById("contador").innerHTML = 
-                    `${dias} ${textoDias}, ${horas} ${textoHoras}, ${minutos} ${textoMinutos}, ${segundos} ${textoSegundos}`;
-            } else {
-                clearInterval(intervalo);
-                document.getElementById("contador").innerHTML = mensajeFinal;
-            }
+            document.getElementById("contador").innerHTML =
+                `${dias} ${textoDias}, ${horas} ${textoHoras}, ${minutos} ${textoMinutos}, ${segundos} ${textoSegundos}`;
         }, 1000);
     </script>
 </body>
