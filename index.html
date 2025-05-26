@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Contador hasta 5 de junio</title>
+    <title>Countdown to June 5</title>
 </head>
 <body>
-    <h1>Cuenta regresiva hasta el 5 de junio</h1>
-    <div id="contador"></div>
+    <h1>Countdown to June 5</h1>
+    <div id="countdown"></div>
 
     <script>
-        // Fecha objetivo: 5 de junio a las 00:00:00 de este año
-        const fechaObjetivo = new Date(new Date().getFullYear(), 5 - 1, 5, 0, 0, 0);
+        // Target date: June 5 at 00:00:00 of this year
+        const targetDate = new Date(new Date().getFullYear(), 6 - 1, 5, 0, 0, 0);
 
-        // URL donde quieres que redirija al llegar la fecha
-        const urlRedireccion = "https://www.ejemplo.com";
+        // URL to redirect to when the date arrives
+        const redirectURL = "https://www.example.com";
 
-        const contadorDiv = document.getElementById("contador");
+        const countdownDiv = document.getElementById("countdown");
 
-        function actualizarContador() {
-            const ahora = new Date();
-            const diferencia = fechaObjetivo - ahora;
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
 
-            if (diferencia <= 0) {
-                // Cuando llegue la fecha, redirige a la página
-                window.location.href = urlRedireccion;
+            if (diff <= 0) {
+                // Redirect when the date arrives
+                window.location.href = redirectURL;
                 return;
             }
 
-            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            contadorDiv.textContent = `Faltan ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
+            countdownDiv.textContent = `Time left: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
         }
 
-        // Actualiza el contador cada segundo
-        setInterval(actualizarContador, 1000);
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
 
-        // Mostrar contador desde el inicio
-        actualizarContador();
+        // Show countdown immediately
+        updateCountdown();
     </script>
 </body>
 </html>
