@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <title>Countdown to June 5</title>
     <style>
-        /* Full screen black background */
         body, html {
             height: 100%;
             margin: 0;
             background-color: black;
             display: flex;
-            justify-content: center; /* horizontal center */
-            align-items: center;     /* vertical center */
+            justify-content: center;
+            align-items: center;
             color: white;
-            font-size: 5rem;
+            font-size: 3rem;      /* smaller font size */
             font-family: Arial, sans-serif;
             user-select: none;
+            letter-spacing: 0.1em;
         }
         #countdown {
             text-align: center;
@@ -26,11 +26,9 @@
     <div id="countdown"></div>
 
     <script>
-        // Target date: June 5 at 00:00:00 of this year
-        const targetDate = new Date(new Date().getFullYear(), 6 - 1, 5, 0, 0, 0);
+        const targetDate = new Date(new Date().getFullYear(), 5, 5, 0, 0, 0); // June is month 5 (0-based: 0=Jan)
 
-        // URL to redirect to when the date arrives
-        const redirectURL = "https://www.deltarune.com/";
+        const redirectURL = "https://www.deltarune.com";
 
         const countdownDiv = document.getElementById("countdown");
 
@@ -39,7 +37,6 @@
             const diff = targetDate - now;
 
             if (diff <= 0) {
-                // Redirect when the date arrives
                 window.location.href = redirectURL;
                 return;
             }
